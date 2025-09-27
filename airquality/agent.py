@@ -1,5 +1,5 @@
-from google.adk.agents import Agent
-root_agent = ParallelAgent(
+from google.adk.agents import LlmAgent
+root_agent = LlmAgent(
     name="airQuality",
     model="gemini-2.0-flash",
     description=(
