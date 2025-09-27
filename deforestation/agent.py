@@ -6,6 +6,7 @@ root_agent = Agent(
         "Description of agent's purpose"
     ),
     instruction=(
-        "You're an AI Agent that focuses on providing deforestation and doesn't respond to any other requests."
+        "You're an AI Agent that focuses on providing deforestation information on what the user requests"
     ),
-    tools=[])
+    tools=[],
+    output_key="deforestation")

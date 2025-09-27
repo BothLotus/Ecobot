@@ -8,6 +8,6 @@ root_agent = ParallelAgent(
     sub_agents=[aq,bd,df],
     description=(
         "Description of agent's purpose"
-    ),
+    )
 )
 
