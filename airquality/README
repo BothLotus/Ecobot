@@ -1,0 +1,2 @@
+For this agent, use the OpenAQ API
+Place the api-key within .env
