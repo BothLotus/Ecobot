@@ -7,4 +7,4 @@ merger_agent = LlmAgent(
      description="Combines research findings from parallel agents into a structured, cited report, strictly grounded on provided inputs.",
      # No tools needed for merging
      # No output_key needed here, as its direct response is the final output of the sequence
- ) merger fie
+ ) 
