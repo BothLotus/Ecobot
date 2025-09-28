@@ -1,3 +1,3 @@
-# ShellHacks2025
+# Ecobot
 Project for Shellhacks 2025
 
