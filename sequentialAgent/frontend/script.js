@@ -5,14 +5,14 @@ async function sendMessage() {
 
   addMessage("You", message, "user");
 
-  const response = await fetch('http://localhost:440/synthesis?query=$(message)', {
-    method: 'GET',
+  const response = await fetch('http://localhost:440/synthesis', {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ prompt: message })
-  });
+    body: JSON.stringify({ query: message }) // your FastAPI expects key 'query'
+});
 
   const data = await response.json();
-  addMessage("EcoBot", data.reply, "bot");
+  addMessage("EcoBot", data.response, "bot");
 
   input.value = "";
 }
@@ -100,6 +100,8 @@ function createCloud(fromLeft = true) {
   // Remove cloud after animation ends
   setTimeout(() => cloud.remove(), duration * 1000);
 }
+
+
 
 // Spawn 5 clouds initially from both sides, staggered by 800ms
 for (let i = 0; i < 5; i++) {

@@ -1,47 +1,50 @@
-from fastapi import FastAPI
+from google import *
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+
 import uvicorn
-import os
-from .agent import root_agent  # SequentialAgent
+
+from sequentialAgent.agent import root_agent  # Your SequentialAgent
+
+#from google.adk.a2a.executor.a2a_agent_executor import AgentExecutor
+#executor = AgentExecutor(root_agent)
+#from sequentialAgent.agent import agent_executor
+
+from sequentialAgent.agent_executor import sequentialAgent, sequentialAgentExecutor
+
+
 
 app = FastAPI()
 
-# Allow frontend (HTML/JS) to access this API
+# Allow frontend to call API
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, set your frontend URL
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Helper to invoke the agent
-async def get_agent_response(query: str) -> str:
-    # SequentialAgent.invoke is async
-    response = await root_agent.invoke(query)
-    return response
+# Serve frontend
+app.mount("/frontend", StaticFiles(directory="sequentialAgent/frontend", html=True), name="frontend")
 
+#from google.adk.agents import AgentInput
+@app.post("/synthesis")
+async def synthesis(request: Request):
+    data = await request.json()
+    query = data.get("query")
+    if not query:
+        return {"response": "(no query provided)"}
+    agent = sequentialAgent()
+    result_gen = agent.invoke(query)
+    result = []
+    async for item in result_gen:
+        result.append(item)
 
-# Compute absolute path to frontend folder
-frontend_path = os.path.join(os.path.dirname(__file__), "../frontend")
-
-# Check if folder exists
-if not os.path.isdir(frontend_path):
-    raise RuntimeError(f"Frontend folder does not exist at {frontend_path}")
-
-app.mount("/", StaticFiles(directory=frontend_path, html=True), name="frontend")
-
-# FastAPI endpoint
-@app.get("/synthesis")
-async def synthesis(query: str):
-    """
-    Example request:
-    http://localhost:8000/synthesis?query=Tell me about air quality
-    """
-    result = await get_agent_response(query)
     return {"response": result}
 
 
 if __name__ == "__main__":
     uvicorn.run("sequentialAgent.server:app", host="0.0.0.0", port=440, reload=True)
+

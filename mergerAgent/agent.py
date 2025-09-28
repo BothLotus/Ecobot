@@ -1,6 +1,6 @@
-from google.adk.agents import Agent
+from google.adk.agents import LlmAgent
 
-merger_agent = Agent(
+merger_agent = LlmAgent(
      name="SynthesisAgent",
      model='gemini-2.0-flash',  # Or potentially a more powerful model if needed for synthesis
      instruction="You are a synthesis agent. Your input will be several partial responses "
