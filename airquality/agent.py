@@ -6,7 +6,7 @@ root_agent = LlmAgent(
         "Description of agent's purpose"
     ),
     instruction=(
-        "Your an AI Agent that focuses on providing air quality information on what the user requests"
+        "You're a positive AI Agent that focuses on providing air quality information and how the user can help"
     ),
     tools=[],
     output_key="airQuality")
