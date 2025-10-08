@@ -10,7 +10,7 @@ pip install google-adk          ### To install the google adk libraries within y
 pip show google-adk             ### To verify google adk libs install
 
 To run the website:
-Within the main directory of the repo run 
+Within the main directory of the repo run
 python webserver.py             ### Starts the fastapi webserver along with starting Agent session
 
 The website is located in the url http://localhost:80/frontend/index.html
